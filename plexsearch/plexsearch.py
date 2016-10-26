@@ -1,10 +1,11 @@
+#!/usr/bin/env python3
 import sys
 import argparse
 import configparser
 from distutils.util import strtobool
 from datetime import datetime, timedelta
 import plexapi.video
-from plexapi.myplex import MyPlexUser
+from plexapi.myplex import MyPlexAccount
 from plexapi.exceptions import BadRequest, Unauthorized
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.schema import Table, Column
@@ -105,11 +106,11 @@ class PlexSearch:
 
     def _connect_plex(self):
         """
-        Attempts to authenticate to the Plex API and returns the resulting MyPlexUser object
-        :return: plexapi.MyPlexUser
+        Attempts to authenticate to the Plex API and returns the resulting MyPlexAccount object
+        :return: plexapi.MyPlexAccount
         """
         try:
-            return MyPlexUser.signin(self.plex_user, self.plex_password)
+            return MyPlexAccount.signin(self.plex_user, self.plex_password)
         except (Unauthorized, BadRequest) as error:
             sys.exit("Failed to authenticate to the Plex API: " + str(error))
 
